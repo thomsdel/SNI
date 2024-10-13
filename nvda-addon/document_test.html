@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode confidentiel - Accessillage</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Dossier Patient</h1>
+    <button id="Changement_mode">Activer le mode d'accessibilité</button>
+</header>
+
+<main>
+    <section>
+        <h2>Informations Personnelles</h2>
+        <p>Nom : <span class="confidentiel">Martin</span></p>
+        <p>Adresse : <span class="confidentiel">12 Avenue Paul Langevin</span></p>
+        <p>Téléphone : <span class="confidentiel">+33612345678</span></p>
+    </section>
+    <section>
+        <h2>Diagnostic</h2>
+        <p><span class="confidentiel">Cancer du foie</span></p>
+    </section>
+</main>
+
+<script>
+    // Sélection du bouton et des éléments confidentiels
+    const Bouton_mode = document.getElementById('Changement_mode');
+    const elements_confidentiels = document.querySelectorAll('.confidentiel');
+
+    // Fonction pour activer/désactiver le mode accessibilité
+    Bouton_mode.addEventListener('click', function() {
+        document.body.classList.toggle('mode_accessibilité');
+
+        // Modifier le texte du bouton en fonction du mode activé
+        if (document.body.classList.contains('mode_accessibilité')) {
+            Bouton_mode.textContent = "Désactiver le mode d'accessibilité";
+
+            // Pour chaque élément confidentiel
+            elements_confidentiels.forEach(function(element) {
+                // Masquer le texte original pour le lecteur d'écran et définir l'aria-label (visible pas le lecteur d'écran)
+                element.setAttribute('aria-hidden', 'true');
+                element.setAttribute('aria-label', 'Donnee confidentielle');
+            });
+
+        } else {
+            Bouton_mode.textContent = "Activer le mode d'accessibilité";
+
+            // Rétablir le texte original pour les utilisateurs sans handicap
+            elements_confidentiels.forEach(function(element) {
+                element.removeAttribute('aria-hidden');
+                element.removeAttribute('aria-label');
+            });
+        }
+    });
+
+    // Gérer l'accessibilité via la souris et le focus clavier
+    elements_confidentiels.forEach(function(element) {
+        element.addEventListener('focus', function() {
+            if (document.body.classList.contains('mode_accessibilité')) {
+                element.setAttribute('aria-hidden', 'true');
+                element.setAttribute('aria-label', 'Donnee confidentielle');
+            }
+        });
+
+        element.addEventListener('mouseover', function() {
+            if (document.body.classList.contains('mode_accessibilité')) {
+                element.setAttribute('aria-hidden', 'true');
+                element.setAttribute('aria-label', 'Donnee confidentielle');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
