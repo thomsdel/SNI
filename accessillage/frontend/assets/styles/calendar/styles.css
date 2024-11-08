@@ -1,0 +1,26 @@
+#calendar-header, #calendar-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    border: 1px solid #ddd;
+    width: 100px;
+    height: 50px;
+}
+
+.time-cell {
+    width: 60px;
+    text-align: center;
+}
+
+.meeting {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+}
