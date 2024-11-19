@@ -14,7 +14,7 @@ function refreshPage() {
 }
 
 function openCalendar() {
-    window.location.href = "calendrier.php";
+    window.location.href = "calendar.php";
 }
 
 function openPatient() {

@@ -8,8 +8,8 @@ class RdvController {
         $this->rdvModel = new Rdv($pdo);
     }
 
-    public function addRdv($id_doc, $num_secu, $duree) {
-        return $this->rdvModel->create($id_doc, $num_secu, $duree);
+    public function addRdv($data) {
+        return $this->rdvModel->create($data);
     }
 
     public function getRdv($id_rdv) {
@@ -29,8 +29,8 @@ class RdvController {
         return $stmt; 
     }
 
-    public function getRdvByPatient($num_secu) {
-        $stmt = $this->rdvModel->findByPatientNumSecu($num_secu);
+    public function getRdvByPatient($id_patient) {
+        $stmt = $this->rdvModel->findByPatientId($id_patient);
         return $stmt; 
     }
 }

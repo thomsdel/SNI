@@ -2,8 +2,7 @@
 
 <?php
 // Connexion à la base de données
-require_once __DIR__ . '/../../../backend/calendar/config.php';
-require_once __DIR__ . '/../../../backend/calendar/db.php';
+require_once __DIR__ . '/../../../backend/config/config.php';
 
 // Récupérer currentDate depuis la requête POST
 $data = json_decode(file_get_contents("php://input"), true);
@@ -83,7 +82,7 @@ function renderCalendar($firstDayOfWeek, $meetingsByDate) {
                 if ($meetingStart->format('H') == $hour) {
                     $durationInMinutes = $meeting['duree'];
                     $occupiedCells = $durationInMinutes / 60;
-                    $occupiedCells = min($occupiedCells, 2);
+                    $occupiedCells = $occupiedCells + ($occupiedCells - 1) * 0.08; // Pour gérer les tailles des bordures
             
                     $meetingStyle = "background-color: #87CEEB; height: " . (100 * $occupiedCells) . "%;";
             

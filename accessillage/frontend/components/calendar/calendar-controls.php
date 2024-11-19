@@ -2,29 +2,29 @@
 
 <div id="controls" class="calendar-controls">
     <!-- Icône du calendrier -->
-    <img id="calendarIcon" src="../assets/images/calendar/icon-calendar.png" alt="Calendrier Icon">
+    <img id="calendar-icon" src="../assets/images/calendar/icon-calendar.png" alt="Calendrier Icon">
 
     <!-- Bouton Aujourd'hui -->
-    <button id="todayButton">Aujourd'hui</button>
+    <button id="today-button">Aujourd'hui</button>
 
     <!-- Navigation Jour/Semaine -->
-    <button id="prevDateButton">◀</button> <!-- Flèche gauche -->
-    <button id="nextDateButton">▶</button> <!-- Flèche droite -->
+    <button id="prev-date-button">◀</button> <!-- Flèche gauche -->
+    <button id="next-date-button">▶</button> <!-- Flèche droite -->
 
     <!-- Navigation Mois/Année -->
-    <button id="prevMonthButton">◀</button> <!-- Flèche gauche pour mois -->
-    <span id="currentMonth"></span>
-    <button id="nextMonthButton">▶</button> <!-- Flèche droite pour mois -->
+    <button id="prev-month-button">◀</button> <!-- Flèche gauche pour mois -->
+    <span id="current-month"></span>
+    <button id="next-month-button">▶</button> <!-- Flèche droite pour mois -->
 
     <!-- Sélecteur de mode d'affichage -->
     <div class="view-mode">
-        <button id="viewModeButton">
+        <button id="view-mode-button">
             <?= 'Semaine'?> 
         </button>
     </div>
 
     <!-- Popup de sélection de mois -->
-    <?php include 'calendar-popup/monthSelector-popup.php'; ?>
+    <?php include 'calendar-popup/month-selector.php'; ?>
 </div>
 
 

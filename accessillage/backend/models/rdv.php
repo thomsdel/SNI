@@ -8,13 +8,17 @@ class Rdv {
         $this->pdo = $pdo;
     }
 
-    public function create($id_doc, $num_secu, $duree) {
-        $stmt = $this->pdo->prepare("INSERT INTO rdv (id_doc, num_secu, duree) VALUES (:id_doc, :num_secu, :duree)");
+    public function create($data) {
+        $stmt = $this->pdo->prepare("INSERT INTO rdv (titre_rdv, id_doc, id_patient, secteur, date_debut, duree, remarques) VALUES (:titre_rdv, :id_doc, :id_patient, :secteur, :date_debut, :duree, :remarques)");
         
         return $stmt->execute([
-            ':id_doc' => $id_doc,
-            ':num_secu' => $num_secu,
-            ':duree' => $duree
+            ':titre_rdv' => $data['titre_rdv'],
+            ':id_doc' => $data['id_doc'],
+            ':id_patient' => $data['id_patient'],
+            ':secteur' => $data['secteur'],
+            ':date_debut' => $data['date_debut'],
+            ':duree' => $data['duree'],
+            ':remarques' => $data['remarques'],
         ]);
     }
 
@@ -26,9 +30,19 @@ class Rdv {
     }
 
     public function update($id_rdv, $data) {
-        $stmt = $this->pdo->prepare("UPDATE rdv SET id_doc = :id_doc, num_secu = :num_secu, duree = :duree WHERE id_rdv = :id_rdv");
+        $stmt = $this->pdo->prepare("UPDATE rdv SET titre_rdv = :titre_rdv, id_doc = :id_doc, id_patient = :id_patient, secteur = :secteur, date_debut = :date_debut, duree = :duree, remarques = :remarques WHERE id_rdv = :id_rdv");
+        
         $data[':id_rdv'] = $id_rdv; // Ajoute l'ID à la liste des données
-        return $stmt->execute($data);
+        return $stmt->execute([
+            ':titre_rdv' => $data['titre_rdv'],
+            ':id_doc' => $data['id_doc'],
+            ':id_patient' => $data['id_patient'],
+            ':secteur' => $data['secteur'],
+            ':date_debut' => $data['date_debut'],
+            ':duree' => $data['duree'],
+            ':remarques' => $data['remarques'],
+            ':id_rdv' => $id_rdv
+        ]);
     }
 
     public function delete($id_rdv) {
@@ -36,6 +50,17 @@ class Rdv {
         return $stmt->execute([':id_rdv' => $id_rdv]);
     }
 
-    // Ajoute d'autres méthodes si nécessaire...
+    public function findByDoctorId($id_doc) {
+        $stmt = $this->pdo->prepare("SELECT * FROM rdv WHERE id_doc = :id_doc");
+        $stmt->bindParam(':id_doc', $id_doc);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findByPatientId($id_patient) {
+        $stmt = $this->pdo->prepare("SELECT * FROM rdv WHERE id_patient = :id_patient");
+        $stmt->bindParam(':id_patient', $id_patient);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
-?>

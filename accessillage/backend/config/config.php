@@ -2,9 +2,6 @@
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
-    echo "Nouvelle session lancée";
-} else {
-    echo "Une session est déjà en cours.";
 }
 
 $host = 'localhost'; // Adresse du serveur MySQL

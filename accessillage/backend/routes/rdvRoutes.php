@@ -1,47 +1,46 @@
 <?php
-require_once '../controllers/RdvController.php'; // Inclure le contrôleur des rendez-vous
-require '../config/config.php'; // Inclure la connexion à la base de données
+require_once '../controllers/RdvController.php';
+// require '../config/config.php';
 
 $rdvController = new RdvController($pdo);
 
-// Gestion des requêtes 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Route pour ajouter un rendez-vous
     if (isset($_POST['action']) && $_POST['action'] === 'add') {
-        $rdvController->addRdv($_POST['id_doc'], $_POST['num_secu'], $_POST['duree']);
+        $rdvData = [
+            'titre_rdv' => $_POST['titre_rdv'],
+            'id_doc' => $_POST['id_doc'],
+            'id_patient' => $_POST['id_patient'],
+            'secteur' => $_POST['secteur'],
+            'date_debut' => $_POST['date_debut'],
+            'duree' => $_POST['duree'],
+            'remarques' => $_POST['remarques'],
+        ];
+        // Appeler la fonction pour ajouter le rendez-vous
+        $rdvController->addRdv($rdvData);
     }
-}
 
-// Route pour récupérer les informations d'un rendez-vous
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id_rdv'])) {
-    $rdv = $rdvController->getRdv($_GET['id_rdv']);
-    // Traiter le résultat (par exemple, le renvoyer au frontend)
-}
+    if (isset($_POST['action']) && $_POST['action'] === 'edit') {
+        $idRdv = $_POST['id_rdv'];
+        $rdvData = [
+            'titre_rdv' => $_POST['titre_rdv'],
+            'id_doc' => $_POST['id_doc'],
+            'id_patient' => $_POST['id_patient'],
+            'secteur' => $_POST['secteur'],
+            'date_debut' => $_POST['date_debut'],
+            'duree' => $_POST['duree'],
+            'remarques' => $_POST['remarques'],
+        ];
+        // Appeler la fonction pour ajouter le rendez-vous
+        $rdvController->updateRdv($idRdv, $rdvData);
+    }
 
-// Route pour récupérer tous les rendez-vous d'un docteur
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id_doc'])) {
-    $rdvs = $rdvController->getRdvByDoctor($_GET['id_doc']);
-    // Traiter le résultat
-}
+    if (isset($_POST['id_rdv']) && isset($_POST['action']) && $_POST['action'] === 'get') {
+        $rdv = $rdvController->getRdv($_POST['id_rdv']);
+        echo json_encode($rdv);  // Afficher la réponse JSON
+    }
 
-// Route pour récupérer tous les rendez-vous d'un patient
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['num_secu'])) {
-    $rdvs = $rdvController->getRdvByPatient($_GET['num_secu']);
-    // Traiter le résultat
-}
-
-// Route pour mettre à jour un rendez-vous
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update') {
-    $data = [
-        'id_doc' => $_POST['id_doc'],
-        'num_secu' => $_POST['num_secu'],
-        'duree' => $_POST['duree']
-    ];
-    $rdvController->updateRdv($_POST['id_rdv'], $data);
-}
-
-// Route pour supprimer un rendez-vous
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
-    $rdvController->deleteRdv($_POST['id_rdv']);
+    if (isset($_POST['id_rdv']) && isset($_POST['action']) && $_POST['action'] === 'delete') {
+        $rdv = $rdvController->deleteRdv($_POST['id_rdv']);
+    }
 }
 ?>
