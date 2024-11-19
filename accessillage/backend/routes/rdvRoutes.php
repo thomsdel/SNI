@@ -7,14 +7,17 @@ $rdvController = new RdvController($pdo);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'add') {
         $rdvData = [
-            'titre_rdv' => $_POST['titre_rdv'],
-            'id_doc' => $_POST['id_doc'],
-            'id_patient' => $_POST['id_patient'],
-            'secteur' => $_POST['secteur'],
-            'date_debut' => $_POST['date_debut'],
-            'duree' => $_POST['duree'],
-            'remarques' => $_POST['remarques'],
+            'id_doc' => $_POST['id_doc'] ?? null,
+            'id_patient' => $_POST['id_patient'] ?? null,
+            'titre' => $_POST['titre'] ?? '',
+            'duree' => $_POST['duree'] ?? '',
+            'id_presc' => $_POST['id_presc'] ?? null,
+            'date_rdv' => $_POST['date_rdv'] ?? '',
+            'heure' => $_POST['heure'] ?? '',
+            'secteur' => $_POST['secteur'] ?? ''
         ];
+        print_r($rdvData); // Vérifiez les valeurs ici
+
         // Appeler la fonction pour ajouter le rendez-vous
         $rdvController->addRdv($rdvData);
     }
@@ -22,13 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'edit') {
         $idRdv = $_POST['id_rdv'];
         $rdvData = [
-            'titre_rdv' => $_POST['titre_rdv'],
-            'id_doc' => $_POST['id_doc'],
-            'id_patient' => $_POST['id_patient'],
-            'secteur' => $_POST['secteur'],
-            'date_debut' => $_POST['date_debut'],
-            'duree' => $_POST['duree'],
-            'remarques' => $_POST['remarques'],
+            'id_doc' => $_POST['id_doc'] ?? null,
+            'id_patient' => $_POST['id_patient'] ?? null,
+            'titre' => $_POST['titre'] ?? '',
+            'duree' => $_POST['duree'] ?? '',
+            'id_presc' => $_POST['id_presc'] ?? null,
+            'date_rdv' => $_POST['date_rdv'] ?? '',
+            'heure' => $_POST['heure'] ?? '',
+            'secteur' => $_POST['secteur'] ?? ''
         ];
         // Appeler la fonction pour ajouter le rendez-vous
         $rdvController->updateRdv($idRdv, $rdvData);

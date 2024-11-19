@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // La fonction pour créer une nouvelle réunion
-function openNewMeetingPopup(date, hour) {
+function openNewMeetingPopup(date_rdv, hour) {
     console.log("Création");
 
     // Envoie les informations de date et heure nécessaires à la popup PHP
@@ -95,7 +95,7 @@ function openNewMeetingPopup(date, hour) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ date: date, hour: hour })  // Envoie la date et l'heure dans le corps de la requête
+        body: JSON.stringify({ date_rdv: date_rdv, hour: hour })  // Envoie la date et l'heure dans le corps de la requête
     })
     .then(response => response.text())
     .then(html => {

@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const formData = new FormData(form); // Prépare les données du formulaire
             formData.append('action', 'add'); // Ajoute l'action à envoyer en POST
-        
+            // Pour afficher les champs et leurs valeurs
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }            
             // Envoi de la requête avec Fetch API
             fetch('../../backend/routes/rdvRoutes.php', {
                 method: 'POST',
@@ -22,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text(); // Lire la réponse en texte brut
             })
             .then(responseText => {
+                console.log("Réponse du serveur :", responseText); // Affiche la réponse dans la console
 
                 // Rafraîchit le calendrier et ferme la popup si le rendez-vous est ajouté avec succès
                 updateCalendar();

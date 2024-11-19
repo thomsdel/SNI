@@ -10,6 +10,7 @@ if ($rdvData) {
     // Extraire l'ID du patient et du docteur
     $id_patient = $rdvData['id_patient'];
     $id_doc = $rdvData['id_doc'];
+    $id_presc = $rdvData['id_presc'];
 
     // Récupérer le nom complet du patient
     $patientQuery = "SELECT CONCAT(nom, ' ', prenom) AS full_name FROM patient WHERE id_patient = :id_patient";
@@ -27,14 +28,23 @@ if ($rdvData) {
     $doctor = $doctorStmt->fetch(PDO::FETCH_ASSOC);
     $doctorName = $doctor['full_name'] ?? 'Inconnu';
 
+    // Récupérer la presciption
+    $prescriptionQuery = "SELECT medicament FROM prescription WHERE id_presc = :id_presc";
+    $prescriptionStmt = $pdo->prepare($prescriptionQuery);
+    $prescriptionStmt->bindParam(':id_presc', $id_presc, PDO::PARAM_INT);
+    $prescriptionStmt->execute();
+    $prescription = $prescriptionStmt->fetch(PDO::FETCH_ASSOC);
+    $medicament = $prescription['medicament'] ?? 'Inconnu';
+
     // Afficher les détails du rendez-vous
-    echo "<h3>Réunion : " . htmlspecialchars($rdvData['titre_rdv']) . "</h3>";
-    echo "<p>Heure de début : " . htmlspecialchars($rdvData['date_debut']) . "</p>";
-    echo "<p>Secteur : " . htmlspecialchars($rdvData['secteur']) . "</p>";
-    echo "<p>Durée : " . htmlspecialchars($rdvData['duree']) . "</p>";
-    echo "<p>Remarques : " . htmlspecialchars($rdvData['remarques']) . "</p>";
+    echo "<h3>Réunion : " . htmlspecialchars($rdvData['titre']) . "</h3>";
     echo "<p>Patient : " . htmlspecialchars($patientName) . "</p>";
     echo "<p>Médecin : " . htmlspecialchars($doctorName) . "</p>";
+    echo "<p>Prescription : " . htmlspecialchars($medicament) . "</p>";
+    echo "<p>Date : " . htmlspecialchars($rdvData['date_rdv']) . "</p>";
+    echo "<p>Heure de début : " . htmlspecialchars($rdvData['heure']) . "</p>";
+    echo "<p>Secteur : " . htmlspecialchars($rdvData['secteur']) . "</p>";
+    echo "<p>Durée : " . htmlspecialchars($rdvData['duree']) . "</p>";
 } else {
     echo "<p>Erreur dans la récupération des informations de la réunion.</p>";
 }

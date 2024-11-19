@@ -9,16 +9,17 @@ class Rdv {
     }
 
     public function create($data) {
-        $stmt = $this->pdo->prepare("INSERT INTO rdv (titre_rdv, id_doc, id_patient, secteur, date_debut, duree, remarques) VALUES (:titre_rdv, :id_doc, :id_patient, :secteur, :date_debut, :duree, :remarques)");
+        $stmt = $this->pdo->prepare("INSERT INTO rdv (id_doc, id_patient, titre, duree, id_presc, date_rdv, heure, secteur) VALUES (:id_doc, :id_patient, :titre, :duree, :id_presc, :date_rdv, :heure, :secteur)");
         
         return $stmt->execute([
-            ':titre_rdv' => $data['titre_rdv'],
             ':id_doc' => $data['id_doc'],
             ':id_patient' => $data['id_patient'],
-            ':secteur' => $data['secteur'],
-            ':date_debut' => $data['date_debut'],
+            ':titre' => $data['titre'],
             ':duree' => $data['duree'],
-            ':remarques' => $data['remarques'],
+            ':id_presc' => $data['id_presc'],
+            ':date_rdv' => $data['date_rdv'],
+            ':heure' => $data['heure'],
+            ':secteur' => $data['secteur'],
         ]);
     }
 
@@ -30,17 +31,18 @@ class Rdv {
     }
 
     public function update($id_rdv, $data) {
-        $stmt = $this->pdo->prepare("UPDATE rdv SET titre_rdv = :titre_rdv, id_doc = :id_doc, id_patient = :id_patient, secteur = :secteur, date_debut = :date_debut, duree = :duree, remarques = :remarques WHERE id_rdv = :id_rdv");
+        $stmt = $this->pdo->prepare("UPDATE rdv SET id_doc = :id_doc, id_patient = :id_patient, titre = :titre, duree = :duree, id_presc = :id_presc, date_rdv = :date_rdv, heure = :heure, secteur = :secteur WHERE id_rdv = :id_rdv");
         
         $data[':id_rdv'] = $id_rdv; // Ajoute l'ID à la liste des données
         return $stmt->execute([
-            ':titre_rdv' => $data['titre_rdv'],
             ':id_doc' => $data['id_doc'],
             ':id_patient' => $data['id_patient'],
-            ':secteur' => $data['secteur'],
-            ':date_debut' => $data['date_debut'],
+            ':titre' => $data['titre'],
             ':duree' => $data['duree'],
-            ':remarques' => $data['remarques'],
+            ':id_presc' => $data['id_presc'],
+            ':date_rdv' => $data['date_rdv'],
+            ':heure' => $data['heure'],
+            ':secteur' => $data['secteur'],
             ':id_rdv' => $id_rdv
         ]);
     }

@@ -4,15 +4,14 @@ require_once __DIR__ . '/../../../../../backend/config/config.php';
 
 // Récupérer les données envoyées par JSON
 $data = json_decode(file_get_contents("php://input"), true);
-$titre = $data['titre_rdv'] ?? '';
+$titre = $data['titre'] ?? '';
 $secteur = $data['secteur'] ?? '';
 $id_doc = $data['id_doc'] ?? null;
 $id_patient = $data['id_patient'] ?? null;
-$date_debut = $data['date_debut'] ?? '';
-$hour = date('H:i', strtotime($date_debut)); // Extraction de l'heure
-$date = date('Y-m-d', strtotime($date_debut)); // Extraction de la date
+$id_presc = $data['id_presc'] ?? null;
+$date_rdv = $data['date_rdv'] ?? '';
+$hour = $data['heure'] ?? '';
 $duree = $data['duree'] ?? '';
-$remarques = $data['remarques'] ?? '';
 
 // Récupérer les patients et docteurs depuis la base de données
 $patientsQuery = "SELECT id_patient, CONCAT(nom, ' ', prenom) AS full_name FROM patient";
@@ -22,11 +21,15 @@ $patients = $patientsStmt->fetchAll(PDO::FETCH_ASSOC);
 $doctorsQuery = "SELECT id_doc, CONCAT(nom_doc, ' ', prenom_doc) AS full_name FROM docteur";
 $doctorsStmt = $pdo->query($doctorsQuery);
 $doctors = $doctorsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+$prescriptionsQuery = "SELECT id_presc, medicament FROM prescription";
+$prescriptionsStmt = $pdo->query($prescriptionsQuery);
+$prescriptions = $prescriptionsStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <form id="edit-meeting-form" action="" method="POST">
     <label for="titre_rdv">Titre de la réunion :</label>
-    <input type="text" id="titre_rdv" name="titre_rdv" value="<?= htmlspecialchars($titre); ?>" required>
+    <input type="text" id="titre_rdv" name="titre" value="<?= htmlspecialchars($titre); ?>" required>
 
     <label for="secteur_rdv">Secteur :</label>
     <input type="text" id="secteur_rdv" name="secteur" value="<?= htmlspecialchars($secteur); ?>" required>
@@ -51,14 +54,24 @@ $doctors = $doctorsStmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </select>
 
-    <label for="date_debut_rdv">Date et Heure de début :</label>
-    <input type="datetime-local" id="date_debut_rdv" name="date_debut" value="<?= $date . 'T' . $hour; ?>" required>
+    <label for="prescription">Prescription :</label>
+    <select id="prescription" name="id_presc" required>
+        <option value="">Sélectionnez une prescription</option>
+        <?php foreach ($prescriptions as $prescription): ?>
+            <option value="<?= $prescription['id_presc']; ?>" <?= $prescription['id_presc'] == $id_presc ? 'selected' : ''; ?>>
+                <?= htmlspecialchars($prescription['medicament']); ?>
+            </option>        <?php endforeach; ?>
+    </select>
+
+    <!-- Séparation en deux champs pour la date et l'heure -->
+    <label for="date">Date :</label>
+    <input type="date" id="date" name="date_rdv" value="<?= $date_rdv; ?>" required>
+
+    <label for="heure">Heure de début :</label>
+    <input type="time" id="heure" name="heure" value="<?= $hour; ?>" required>
 
     <label for="duree_rdv">Durée (en minutes) :</label>
     <input type="number" id="duree_rdv" name="duree" value="<?= htmlspecialchars($duree); ?>" min="15" step="15" required>
-
-    <label for="remarques_rdv">Remarques :</label>
-    <textarea id="remarques_rdv" name="remarques"><?= htmlspecialchars($remarques); ?></textarea>
 
     <button type="submit">Mettre à jour la réunion</button>
 </form>

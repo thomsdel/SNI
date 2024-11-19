@@ -19,7 +19,7 @@ $startDate = $firstDayOfWeek->format('Y-m-d');
 $endDate = (clone $firstDayOfWeek)->modify('+7 days')->format('Y-m-d');
 
 // Requête SQL pour récupérer les réunions entre startDate et endDate
-$sql = "SELECT * FROM rdv WHERE date_debut BETWEEN :startDate AND :endDate";
+$sql = "SELECT * FROM rdv WHERE date_rdv BETWEEN :startDate AND :endDate";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':startDate', $startDate);
 $stmt->bindParam(':endDate', $endDate);
@@ -29,7 +29,7 @@ $meetings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Grouper les réunions par date pour un affichage simplifié
 $meetingsByDate = [];
 foreach ($meetings as $meeting) {
-    $meetingDate = (new DateTime($meeting['date_debut']))->format('Y-m-d');
+    $meetingDate = $meeting['date_rdv'];
     $meetingsByDate[$meetingDate][] = $meeting;
 }
 
@@ -75,11 +75,9 @@ function renderCalendar($firstDayOfWeek, $meetingsByDate) {
 
             // Parcourir les réunions et ajuster leur affichage en fonction de la durée
             foreach ($meetingsForCell as $meeting) {
-                $meetingStart = new DateTime($meeting['date_debut']);
-                $meetingEnd = clone $meetingStart;
-                $meetingEnd->modify("+{$meeting['duree']} minutes");
-            
-                if ($meetingStart->format('H') == $hour) {
+                // Vérifier si l'heure de début correspond à l'heure actuelle
+                $meetingHour = new DateTime($meeting['heure']);
+                if ($meetingHour->format('H') == $hour) {
                     $durationInMinutes = $meeting['duree'];
                     $occupiedCells = $durationInMinutes / 60;
                     $occupiedCells = $occupiedCells + ($occupiedCells - 1) * 0.08; // Pour gérer les tailles des bordures
@@ -88,7 +86,7 @@ function renderCalendar($firstDayOfWeek, $meetingsByDate) {
             
                     // Ajout de l'attribut data-meeting-id pour l'ID de la réunion
                     echo '<div class="meeting" style="' . $meetingStyle . '" data-meeting-id="' . $meeting['id_rdv'] . '">';
-                    echo '<strong>' . htmlspecialchars($meeting['titre_rdv']) . '</strong>';
+                    echo '<strong>' . htmlspecialchars($meeting['titre']) . '</strong>';
                     echo '<p>' . htmlspecialchars($meeting['secteur']) . '</p>';
                     echo '</div>';
                     break;

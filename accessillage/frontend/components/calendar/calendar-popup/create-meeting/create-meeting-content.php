@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../../../../backend/config/config.php';
 
 // Récupérer la date et l'heure envoyées par la requête
 $data = json_decode(file_get_contents("php://input"), true);
-$date = $data['date'] ?? null;
+$date_rdv = $data['date_rdv'] ?? null;
 $hour = $data['hour'] ?? null;
 
 // Ajouter des minutes si l'heure est donnée en format `HH`
@@ -22,13 +22,17 @@ $patients = $patientsStmt->fetchAll(PDO::FETCH_ASSOC);
 $doctorsQuery = "SELECT id_doc, CONCAT(nom_doc, ' ', prenom_doc) AS full_name FROM docteur";
 $doctorsStmt = $pdo->query($doctorsQuery);
 $doctors = $doctorsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+$prescriptionsQuery = "SELECT id_presc, medicament FROM prescription";
+$prescriptionsStmt = $pdo->query($prescriptionsQuery);
+$prescriptions = $prescriptionsStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
 <form id="create-meeting-form" action="" method="POST">
     <!-- Vos champs de formulaire ici -->
     <label for="titre_rdv">Titre de la réunion :</label>
-    <input type="text" id="titre_rdv" name="titre_rdv" required>
+    <input type="text" id="titre_rdv" name="titre" required>
 
     <label for="secteur_rdv">Secteur :</label>
     <input type="text" id="secteur_rdv" name="secteur" required>
@@ -49,14 +53,23 @@ $doctors = $doctorsStmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
     </select>
 
-    <label for="date_debut_rdv">Date et Heure de début :</label>
-    <input type="datetime-local" id="date_debut_rdv" name="date_debut" value="<?= $date . 'T' . $hour; ?>" required>
+    <label for="prescription">Prescription :</label>
+    <select id="prescription" name="id_presc" required>
+        <option value="">Sélectionnez une prescription</option>
+        <?php foreach ($prescriptions as $prescription): ?>
+            <option value="<?= $prescription['id_presc']; ?>"><?= $prescription['medicament']; ?></option>
+        <?php endforeach; ?>
+    </select>
+
+    <!-- Séparation en deux champs pour la date et l'heure -->
+    <label for="date">Date :</label>
+    <input type="date" id="date" name="date_rdv" value="<?= $date_rdv; ?>" required>
+
+    <label for="heure">Heure de début :</label>
+    <input type="time" id="heure" name="heure" value="<?= $hour; ?>" required>
 
     <label for="duree_rdv">Durée (en minutes) :</label>
     <input type="number" id="duree_rdv" name="duree" min="15" step="15" required>
-
-    <label for="remarques_rdv">Remarques :</label>
-    <textarea id="remarques_rdv" name="remarques"></textarea>
 
     <button type="submit">Créer la réunion</button>
 </form>
