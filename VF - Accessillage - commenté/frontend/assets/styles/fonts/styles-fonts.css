@@ -1,0 +1,93 @@
+input, textarea, button, select {
+    font-family: inherit; /* Hérite du body ou du parent */
+}
+
+/* OpenDyslexic Regular */
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('opendyslexic/OpenDyslexic-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+  
+/* OpenDyslexic Bold */
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('opendyslexic/OpenDyslexic-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+  
+/* Atkinson Hyperlegible Regular */
+@font-face {
+    font-family: 'Atkinson';
+    src: url('atkinson/Atkinson-Hyperlegible-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+  
+/* Atkinson Hyperlegible Bold */
+@font-face {
+    font-family: 'Atkinson';
+    src: url('atkinson/Atkinson-Hyperlegible-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+  
+/* Luciole Regular */
+@font-face {
+    font-family: 'Luciole';
+    src: url('luciole/Luciole-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Luciole Bold */
+@font-face {
+    font-family: 'Luciole';
+    src: url('luciole/Luciole-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+  
+
+/* Classes pour les polices */
+.font-default {
+    font-family: Arial, sans-serif;
+    font-weight: normal; /* Texte normal */
+}
+
+.font-default-bold {
+    font-family: Arial, sans-serif;
+    font-weight: bold; /* Texte en gras */
+}
+  
+.font-opendyslexic {
+    font-family: 'OpenDyslexic', sans-serif;
+    font-weight: normal; /* Texte normal */
+}
+  
+.font-opendyslexic-bold {
+    font-family: 'OpenDyslexic', sans-serif;
+    font-weight: bold; /* Texte en gras */
+}
+  
+.font-atkinson {
+    font-family: 'Atkinson', sans-serif;
+    font-weight: normal; /* Texte normal */
+}
+  
+.font-atkinson-bold {
+    font-family: 'Atkinson', sans-serif;
+    font-weight: bold; /* Texte en gras */
+}
+
+.font-luciole {
+    font-family: 'Luciole', sans-serif;
+    font-weight: normal; /* Texte normal */
+}
+  
+.font-luciole-bold {
+    font-family: 'Luciole', sans-serif;
+    font-weight: bold; /* Texte en gras */
+}

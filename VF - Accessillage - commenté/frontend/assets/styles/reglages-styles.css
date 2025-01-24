@@ -1,0 +1,77 @@
+/* Thème blanc (classique) */
+:root.theme-white {
+    --navbar-color: rgb(80,131,173,255);
+    --onglet-color: rgb(159,194,223,255);
+    --background-color: white;
+    --background-color-bis: rgb(234,234,234,255); /* Gris clair */
+    --text-color: #000000;
+    --accent-color: #007acc;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --overlay-color: rgba(0, 0, 0, 0.5);
+    --component-color: white;
+}
+  
+/* Thème sombre (gris foncé) */
+:root.theme-dark {
+    --navbar-color: #333333;
+    --onglet-color: black;
+    --background-color: #1e1e1e;
+    --background-color-bis: #333333;
+    --text-color: white;
+    --accent-color: #007acc;
+    --border-color: white;
+    --overlay-color: rgba(0, 0, 0, 0.5);
+    --component-color: #1e1e1e;
+}
+
+
+
+
+/* Taille normale (par défaut) */
+:root.font-normal {
+    --base-font-size: 16px;
+    --heading-font-size: 1.5em;
+}
+  
+/* Taille grande */
+:root.font-large {
+    --base-font-size: 20px;
+    --heading-font-size: 1.75em;
+}
+  
+/* Taille très grande */
+:root.font-very-large {
+    --base-font-size: 24px;
+    --heading-font-size: 2em;
+}
+
+
+
+
+/* Espacement des lettres (avec une légère augmentation) */
+.letter-spacing-normal {
+    letter-spacing: 0.05em;
+}
+
+/* Espacement des lettres (avec plus de distance) */
+.letter-spacing-wide {
+    letter-spacing: 0.1em;
+}
+
+
+
+
+/* Interligne étroit */
+.line-spacing-narrow {
+    line-height: 1.2;
+}
+
+/* Interligne normal */
+.line-spacing-normal {
+    line-height: 1.5;
+}
+
+/* Interligne large */
+.line-spacing-wide {
+    line-height: 2;
+}

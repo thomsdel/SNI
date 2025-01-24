@@ -1,0 +1,115 @@
+/* Styles pour le corps du calendrier */
+#calendar {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#calendar-container {
+    margin: 0;
+    padding: 0;
+}
+
+#calendar-table {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    table-layout: fixed; /* Assure que toutes les colonnes aient la même largeur */
+}
+
+#calendar-table td {
+    border: 1px solid var(--border-color); 
+    padding: 0;
+    text-align: center;
+}
+
+#calendar-table th {
+    /* position: sticky; Cela fixe la ligne en haut quand on défile */
+    top: 20vh; /* Assure qu'elle reste en haut de la page */
+    left: 0; /* Fixe également la ligne à gauche */
+    /* width: auto;  Laisse la largeur de chaque cellule s'ajuster automatiquement */
+    background-color: var(--background-color-bis); 
+    z-index: 10; 
+    box-shadow: 0 2px 4px var(--border-color); 
+    text-align: center;
+    vertical-align: middle; 
+    padding: 10px;
+    font-size: var(--heading-font-size);
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+#calendar-table th.day-line {
+    width: calc(100% / 7);
+    box-sizing: border-box; 
+}
+
+.calendar-cell {
+    border: 1px solid var(--border-color);
+    height: 100%; /* Hauteur par défaut des cellules */
+    vertical-align: top;
+    position: relative;
+    overflow: visible; /* Autorise les éléments à dépasser */
+}
+
+/* Styles pour les heures et jours */
+.hour-column {
+    width: 5vw; 
+}
+
+.hour-cell {
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+    height: 5vw; 
+}
+
+.day-line {
+    height: 3vw;
+    text-align: center;
+    vertical-align: middle; 
+    padding: 10px;
+    box-sizing: border-box; 
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+/* Pour le deuxième jour */
+.highlight-day {
+    background-color: var(--background-color-bis);
+    font-weight: bold;        
+    border: 2px solid #87ceeb;
+    box-shadow: 0px 0px 5px var(--border-color);
+}
+
+/* Styles pour les réunions */
+.meeting {
+    background-color: var(--accent-color);
+    padding: 5px;
+    margin: 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px var(--border-color);
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    top: 0;
+    /* Calcul dynamique de la hauteur en fonction de la durée */
+    height: calc(var(--minute-height) * attr(data-duration minutes));
+    z-index: 1;
+}
+
+/* Dégradé lisse pour masquer les bordures entre les cellules */
+.meeting::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0); /* Couleur de fond de transition */
+    border-radius: 4px;
+    box-shadow: 0 1px 0 var(--border-color), 0 -1px 0 var(--border-color);
+    z-index: -1;
+}
+
+/* Déclaration de la hauteur d'une minute pour l'échelle */
+:root {
+    --minute-height: 0.833px; /* Calculé comme 50px / 60 minutes pour 1 minute */
+}

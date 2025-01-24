@@ -1,0 +1,438 @@
+@import url("fonts/styles-fonts.css");
+@import url("popups.css");
+@import url("reglages-styles.css");
+
+
+/* Inclut la bordure et le remplissage dans la largeur totale */
+* {
+    box-sizing: border-box; 
+}
+
+/* Styles globaux */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+}
+
+/* Styles pour les tableaux */
+thead th {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: center;
+    font-size: var(--heading-font-size);
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+tbody td {
+    border: 1px solid var(--border-color);
+    padding: 20px 30px;
+    text-align: left;
+    font-size: var(--base-font-size);
+    color: var(--text-color);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--background-color);
+}
+
+tbody tr:hover {
+    background-color: var(--background-color);
+}
+
+/* Styles pour la barre de navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--navbar-color);
+    padding: 5px 30px; 
+    overflow: visible; /* Empêche le débordement */
+}
+
+.navbar img {
+    width: 40px; /* Taille des images dans les boutons */
+    height: 40px; /* Taille des images dans les boutons */
+    margin: auto;
+}
+
+/* Styles pour les trois onglets */
+.onglet {
+    width: 100%;
+    height: 60px;
+    display: flex; 
+    justify-content: space-between; 
+    padding: 0; 
+    margin: 0; 
+}
+
+.onglet button {
+    display: flex;
+    flex: 1; /* Permet aux boutons de prendre l'espace restant */
+    margin: 0; /* Supprime l'espace entre les boutons pour qu'ils se touchent */
+    padding: 20px; 
+    background-color: var(--onglet-color); 
+    color: var(--text-color); 
+    font-size: var(--heading-font-size); 
+    font-weight: bold; 
+    border: none; 
+    cursor: pointer; 
+    align-items: center;
+    justify-content: center;
+}
+
+.onglet button:hover {
+    background-color: var(--background-color-bis); 
+}
+
+.onglet button.active {
+    background-color: var(--background-color-bis); /* Même couleur que le hover */
+}
+
+.onglet img {
+    width: 50px; 
+    height: 50px;
+    margin: 15px;
+}
+
+/* Noms des patients */
+.patient-name {
+    font-size: var(--base-font-size);
+}
+
+/* Styles pour les icones */
+.icon {
+    margin-right: 20px; 
+    height: 40px; 
+    width: auto;
+}
+
+/* Styles pour les différents boutons du site web */
+.back-button, .next-button, .refresh-button, .agenda-button, .patient-button, .user-button, .reglages-button, .deconnexion-button {
+    padding: 5px;
+    margin: 0 5px; 
+    border: none;
+    cursor: pointer;
+    background: transparent; 
+}
+
+/* Saisie de la barre de recherche principale */
+.search-bar input {
+    padding: 20px 20px;
+    margin: 5px;
+    font-size: var(--base-font-size);
+    height: 40px;
+    width: 700px;
+    background-color: var(--onglet-color);
+    border-radius: 20px;
+    border: 0;
+    box-shadow: inset 0 4px 8px var(--border-color); /* Ombre intérieure */
+    color: var(--text-color);
+}
+
+/* Surlignage quand un mot est trouvé avec la barre de recherche */
+.highlight {
+    background-color: yellow;
+    color: var(--text-color);
+}
+
+/* Saisie de la barre de recherche de patient */
+.patient-search-bar input {
+    padding: 20px 20px;
+    margin: auto;
+    font-size: var(--base-font-size);
+    height: 40px;
+    width: 500px;
+    background-color: var(--component-color);
+    border-radius: 20px;
+    border: 0;
+    box-shadow: inset 0 4px 8px var(--border-color); /* Ombre intérieure */
+    color: var(--text-color);
+}
+
+/* Styles pour la navigation de la barre de recherche principale */
+header, footer {
+    background-color: var(--text-color);
+    color: var(--text-color);
+    text-align: center;
+    padding: 5px 0;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--background-color);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.tab.active {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.tab:hover {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.header-buttons button {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-buttons button:hover {
+    background-color: var(--accent-color);
+}
+
+/* Conteneur principal */
+.container {
+    display: flex;            
+    flex-wrap: wrap;          
+    justify-content: center;
+    gap: 20px;                 
+    width: 100%;               
+    margin: 20px auto;      
+    padding: 20px;            
+    background-color: var(--background-color-bis);  
+    border: 1px solid var(--border-color);  
+    box-shadow: 0 0 10px var(--border-color); 
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.container img {
+    width: 50px; 
+    height: 50px;
+    margin: 15px;
+}
+
+/* Colonnes dans les conteneurs */
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* Les colonnes s'empilent verticalement */
+    gap: 10px;
+    min-width: 300px;
+}
+
+/* Styles pour les différentes sections */
+.section-card {
+    border: 2px solid var(--border-color); /* Bordure grise autour de chaque section */
+    border-radius: 10px;       /* Bords arrondis */
+    padding: 20px;            /* Ajoute du padding à l'intérieur de chaque section */
+    box-shadow: 0 4px 8px var(--border-color); /* Ombre autour de chaque section */
+    background-color: var(--background-color);   /* Couleur de fond du conteneur */
+}
+
+.section-card h2 {
+    font-size: var(--heading-font-size);
+    color: var(--text-color);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Styles pour les différentes lignes de formulaire */
+.row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    text-align: right;
+}
+
+.row label {
+    width: 210px;
+    font-weight: bold;
+    font-size: var(--base-font-size);
+    color: var(--text-color);
+}
+
+.row input[type="text"],
+.row input[type="email"],
+.row input[type="date"],
+.row input[type="number"],
+a {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    background-color: var(--background-color-bis);   /* Couleur de fond du conteneur */
+    box-shadow: inset 0 4px 8px var(--border-color); /* Ombre intérieure */
+    text-align: center;
+    color: var(--text-color);
+}
+
+.row span {
+    margin-right: 40px;
+}
+
+.row button {
+    margin-left: auto;
+    font-size: var(--base-font-size);
+}
+
+/* Styles pour des sections spécifiques */
+.section {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: var(--background-color);
+}
+
+.section h2 {
+    margin-top: 0;
+    font-size: var(--heading-font-size);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* Styles pour les cellules de tableaux */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#consultation-table-container, #patient-table-container {
+    width: 100%; /* Le conteneur suit la largeur du viewport */
+    overflow-x: auto; /* Ajoute un scroll horizontal si nécessaire */
+}
+  
+#consultation-table, #patient-table {
+    width: 100%; /* Étend la largeur du tableau */
+    border-collapse: collapse; /* Fusionne les bordures des cellules */
+}
+  
+  /* Stylisation optionnelle des tableaux */
+  #consultation-table th, #consultation-table td, 
+  #consultation-table th, #consultation-table td {
+    border: 1px solid var(--border-color);
+    text-align: left;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  #consultation-table th {
+    background-color: var(--background-color); 
+  }
+  
+  #consultation-table th img {
+    vertical-align: middle; 
+  }
+
+
+/* Styles pour les erreurs */
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Styles pour la barre de contrôle du calendrier */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.controls button {
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background-color: var(--accent-color);
+}
+
+/* Styles pour la fermeture de popups */
+.close-popup-btn {
+    background-color: transparent;
+    border: none;
+    font-size: var(--heading-font-size);
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-popup-btn:hover {
+    color: red;
+}
+
+
+/* Styles pour la connexion et déconnexion */
+.account-change-section,
+.logout-section,
+.personal-info-section {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-change-section h2,
+.logout-section h2,
+.personal-info-section h2 {
+    margin-top: 0;
+}
+
+.account-change-section form,
+.personal-info-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-change-section label,
+.personal-info-section label {
+    margin: 10px 0 5px;
+}
+
+.account-change-section input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.account-change-section button,
+.logout-section button {
+    padding: 10px;
+    background-color: var(--text-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.account-change-section button:hover,
+.logout-section button:hover {
+    background-color: var(--text-color);
+}

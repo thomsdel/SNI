@@ -1,0 +1,31 @@
+/* Styles pour le header et le corps du calendrier */
+#calendar-header, #calendar-body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styles pour les lignes du calendrier */
+.row {
+    display: flex;
+}
+
+/* Styles pour chaque cellule du calendrier */
+.cell {
+    border: 1px solid var(--border-color);
+    width: 100px;
+    height: 50px;
+}
+
+/* Styles pour les cellules d'heure */
+.time-cell {
+    width: 60px;
+    text-align: center;
+}
+
+/* Styles pour les réunions */
+.meeting {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    padding: 5px;
+    border-radius: 3px;
+}
