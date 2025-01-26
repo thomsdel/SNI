@@ -1,0 +1,79 @@
+-- Création de la base de données
+CREATE DATABASE IF NOT EXISTS accessillage;
+USE accessillage;
+
+-- Table Prescription
+CREATE TABLE prescription (
+    id_presc INT AUTO_INCREMENT PRIMARY KEY,
+    medicament VARCHAR(256) NOT NULL,
+    duree_presc INT NOT NULL,
+    id_patient INT NOT NULL,
+    date_presc TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    dose VARCHAR(255) NOT NULL,
+    voie VARCHAR(255) NOT NULL,
+    FOREIGN KEY (id_patient) REFERENCES patient(id_patient)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Table Docteur
+CREATE TABLE docteur (
+    id_doc INT AUTO_INCREMENT PRIMARY KEY,
+    nom_doc VARCHAR(200) NOT NULL,
+    prenom_doc VARCHAR(200) NOT NULL,
+    service VARCHAR(200) NOT NULL
+);
+
+-- Table Patient
+CREATE TABLE patient (
+    id_patient INT AUTO_INCREMENT PRIMARY KEY,
+    civilité VARCHAR(200),
+    sexe VARCHAR(200),
+    nom VARCHAR(200) NOT NULL,
+    prenom VARCHAR(200) NOT NULL,
+    nom_usage VARCHAR(200),
+    date_naissance DATE NOT NULL,
+    lieu_naissance VARCHAR(200),
+    situation_familiale VARCHAR(200),
+    profession VARCHAR(200),
+    enfants INT,
+    num_secu VARCHAR(200),
+    mutuelle VARCHAR(200),
+    adresse VARCHAR(200),
+    code_postal VARCHAR(200),
+    ville VARCHAR(200),
+    email_patient VARCHAR(200) NOT NULL,
+    tel_patient VARCHAR(200),
+    id_doc INT,
+    date_enregistrement DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (id_doc) REFERENCES docteur(id_doc)
+        ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Table Rendez-vous (RDV)
+CREATE TABLE rdv (
+    id_rdv INT AUTO_INCREMENT PRIMARY KEY,
+    id_doc INT NOT NULL,
+    id_patient INT NOT NULL,
+    titre VARCHAR(200) NOT NULL,
+    duree INT NOT NULL,
+    id_presc INT,
+    date_rdv DATE NOT NULL,
+    heure TIME NOT NULL,
+    secteur VARCHAR(200),
+    FOREIGN KEY (id_doc) REFERENCES docteur(id_doc)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_patient) REFERENCES patient(id_patient)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_presc) REFERENCES prescription(id_presc)
+        ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Table Users
+CREATE TABLE users (
+    id_users INT AUTO_INCREMENT PRIMARY KEY,
+    email_users VARCHAR(200) NOT NULL UNIQUE,
+    password VARCHAR(200) NOT NULL,
+    nom_users VARCHAR(200) NOT NULL,
+    prenom_users VARCHAR(200) NOT NULL,
+    tel_users VARCHAR(200)
+);
